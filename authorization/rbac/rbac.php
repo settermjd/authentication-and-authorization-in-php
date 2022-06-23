@@ -35,7 +35,7 @@ $jane = new User('Jane', $helpdeskManagerRole);
 $michael = new User('Michael', $helpdeskOperatorRole);
 
 if ($rbac->isGranted($jane->getRole(), 'users.add')) {
-    // ...
+    echo "Jane has the <code>users.add</code> role<br>";
 }
 
 $financeDepartment = new Department(1, 'Finance');
@@ -47,5 +47,5 @@ $michael = new User('Michael', $helpdeskOperatorRole, $itDepartment);
 $assertion = new AssertUserDepartmentMatches($financeDepartment, $jane);
 
 if ($rbac->isGranted($jane->getRole(), 'users.add', $assertion)) {
-    // ...
+    echo "Jane in the Finance Department has the <code>users.add</code> role<br>";
 }

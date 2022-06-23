@@ -18,3 +18,4 @@ if ($_SERVER['PHP_AUTH_USER'] !== $username ||
 }
 
 // ... Show the page
+echo "Hello world!";

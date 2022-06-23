@@ -6,7 +6,5 @@ use App\Authenticate\FormAuthenticate as Authenticate;
 
 session_start();
 
-if (! Authenticate::isLoggedIn()) {
-    header("Location: /login.php");
-    exit;
-}
+Authenticate::logout();
+header('Location: /authentication/form-based/');

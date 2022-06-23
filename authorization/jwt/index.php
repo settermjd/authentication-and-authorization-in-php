@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 
@@ -18,13 +19,13 @@ if (!isset($_SERVER['HTTP_AUTHORIZATION'])) {
     $issuer = 'https://localdomain.dev';
     $key = 'XicRF1ZLIUc+NzB4uqdaVlyVNSucfR90kmoAiuOGRi0=';
 
-    $token = JWT::decode($retrievedToken, $key, ['HS256']);
+    $token = JWT::decode($retrievedToken, new Key($key, 'HS256'));
     $now = new DateTimeImmutable();
 
     // Determine if the token is valid or not
     if ($token->iss !== $issuer ||
-        $token->nbf < $now->getTimestamp() ||
-        $token->exp > $now->getTimestamp())
+        $token->nbf > $now->getTimestamp() ||
+        $token->exp < $now->getTimestamp())
     {
         header('HTTP/1.1 401 Unauthorized');
         exit;

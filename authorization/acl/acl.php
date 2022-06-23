@@ -15,18 +15,17 @@ $acl = new Acl();
 $guestRole = new GenericRole('Guest');
 $customerRole = new GenericRole('Customer');
 $helpdeskOperator = new GenericRole('Helpdesk.Operator');
+$helpdeskOperatorBeginner = new GenericRole('Helpdesk.Operator.Beginner');
 $helpdeskManager = new GenericRole('Helpdesk.Manager');
 $adminRole = new GenericRole('Admin');
 
-$acl->addRole($guestRole)
-    ->addRole($customerRole, $guestRole)
-    ->addRole($helpdeskOperatorRole, $customerRole)
-    ->addRole($helpdeskManagerRole, [$helpdeskOperatorRole])
-    ->addRole($adminRole);
-
-$helpdeskOperatorBeginner = new GenericRole('Helpdesk.Operator.Beginner');
-$helpdeskOperator = new GenericRole('Helpdesk.Operator');
-$helpdeskManager = new GenericRole('Helpdesk.Manager');
+/*
+ * $acl->addRole($guestRole)
+ *   ->addRole($customerRole, $guestRole)
+ *   ->addRole($helpdeskOperator, $customerRole)
+ *   ->addRole($helpdeskManager, [$helpdeskOperator])
+ *   ->addRole($adminRole);
+ */
 
 $acl->addRole($guestRole)
     ->addRole($customerRole, $guestRole)
@@ -52,11 +51,10 @@ $acl->allow(
 );
 $acl->allow($helpdeskManager, 'dashboard', ['user.add', 'user.update', 'user.delete']);
 $acl->allow($adminRole);
-
 $acl->deny($guestRole, 'dashboard', 'login');
 
 if ($acl->isAllowed($helpdeskOperator, 'dashboard', 'user.suspend')) {
-    // ...
+    echo "The helpdesk operator has the dashboard resource with the <code>user.suspend</code> privilege.<br>";
 }
 
 $department = new Department('marketing');
@@ -68,3 +66,7 @@ $acl->allow(
     ['user.suspend', 'user.password.change', 'user.search'],
     new CallbackAssertion($assertion)
 );
+
+if ($acl->isAllowed($helpdeskOperator, 'dashboard', 'user.suspend')) {
+    echo "The helpdesk operator in the finance department has the dashboard resource with the <code>user.suspend</code> privilege.<br>";
+}
