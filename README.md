@@ -8,8 +8,8 @@ To use this repository, you need the following:
 
 - PHP 7.4 or above.
 - [Composer](https://getcomposer.org) installed globally.
-- Docker Engine
-- Docker Compose (version 2)
+- [Docker Engine](https://docs.docker.com/engine/install/)
+- [Docker Compose (version 2)](https://docs.docker.com/compose/install/)
 
 ## Getting Started
 
